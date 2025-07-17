@@ -14,65 +14,49 @@ html, body {
 .page-bg {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  min-height: 100vh;
-  padding: 1rem;
-  /* degrade horizontal igual à sua imagem exemplo */
   background: linear-gradient(90deg, #082b5d 0%, #005ad1 100%);
+  min-height: 100vh;
+  padding: 1rem 0;
 }
 
-/* 1. Header com logos */
+/* 1. Header com logos | mesmo width do card */
 .header-logos {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
   justify-content: center;
-  align-items: center;
-  padding: 1rem;                          /* mesmo padding do .sponsors */
-  /*background: rgb(255, 255, 255);*/  /* mesmo background do .sponsors */
-  border-radius: 1rem;                    /* mesma borda arredondada */
-  margin-top: 1.5rem;
-}
+  gap: 1rem;
 
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 360px;
+  margin: 1.5rem auto 0;
+}
 .header-logos .logo {
-  /* mantém proporção, mas usa as mesmas alturas do patrocinador */
-  height: 8rem;   /* ~48px em desktop */
+  height: 8rem;   /* =128px no desktop */
   width: auto;
   object-fit: contain;
 }
 
-@media (max-width: 576px) {
-  .header-logos .logo {
-    height: 2rem; /* ~32px em mobile */
-  }
-}
-
-
 /* 2. Card de confirmação */
 .card {
-  background: #0c3a75;           /* tom escuro de azul para aproximar do mock */
-  border-radius: 2rem;           /* bordas arredondadas bem suaves */
+  background: #0c3a75;
+  border-radius: 2rem;
   padding: 2.5rem 1.5rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 360px;
+  margin: 2rem auto 0;
   text-align: center;
   box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-  margin-top: 2rem;
 }
 .card-logo {
-  /* 384×384 no SVG, exibido a até 192px no desktop, 160px no mobile */
-  width: min(40%, 12rem);  /* até 12rem (~192px) */
+  width: min(40%, 12rem);
   height: auto;
   margin-bottom: 1.5rem;
 }
-@media (max-width: 576px) {
-  .card-logo {
-    width: min(50%, 10rem); /* até 10rem (~160px) */
-  }
-}
 .card-text {
-  color: #ffffff;
+  color: #fff;
   font-size: 1.1rem;
   line-height: 1.4;
   margin-bottom: 1.5rem;
@@ -81,32 +65,31 @@ html, body {
 /* 3. Campo de CPF */
 .cpf-field {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 50px;       /* forma oval */
+  padding: .75rem 1rem;
+  border-radius: 50px;
   border: none;
   font-size: 1rem;
   text-align: center;
   margin-bottom: 1.25rem;
-  background: #ffffff;
-  color: #333333;
+  background: #fff;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 .cpf-field::placeholder {
-  color: #999999;
+  color: #999;
 }
 
 /* 4. Botão Confirmar */
 .btn-confirm {
-  background: #fdbf41;        /* amarelo vivo como no mock */
-  color: #000000;
+  background: #fdbf41;
+  color: #000;
   border: none;
-  padding: 0.75rem 3rem;
-  border-radius: 50px;        /* forma oval larga */
+  padding: .75rem 3rem;
+  border-radius: 50px;
   font-size: 1.25rem;
   font-weight: 500;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   cursor: pointer;
-  transition: filter 0.2s;
+  transition: filter .2s;
 }
 .btn-confirm:hover {
   filter: brightness(1.05);
@@ -114,34 +97,54 @@ html, body {
 
 /* 5. Mensagens de feedback */
 .message {
-  color: #ffffff;
-  font-size: 0.95rem;
+  color: #fff;
+  font-size: .95rem;
   min-height: 1.4em;
   white-space: pre-line;
-  margin-top: 0.5rem;
+  margin-top: .5rem;
 }
 
-/* 6. Rodapé de patrocinadores */
+/* 6. Patrocinadores | mesmo width do card */
 .sponsors {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
   justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  margin-top: auto;
-  margin-bottom: 1.5rem;
-  background: rgb(255, 255, 255);
+  gap: 1rem;
+  background: #fff;
   border-radius: 1rem;
+  padding: 1rem;
+  width: 100%;
+  max-width: 360px;
+  margin: 1.5rem auto 2rem;
 }
 .sponsors .sponsor-logo {
-  /* 96×96 no SVG, exibido a 48px no desktop, 32px no mobile */
+  height: 3rem; /* 48px desktop */
   width: auto;
-  height: 3rem;  /* ~48px */
   object-fit: contain;
 }
+
+/* 7. Ajustes para mobile (<=576px) */
 @media (max-width: 576px) {
+  .header-logos {
+    gap: 1.5rem;
+    padding: 1.25rem;
+  }
+  .header-logos .logo {
+    height: 5rem;  /* 80px em smartphone */
+  }
+  .card {
+    padding: 2rem 1rem;
+    margin: 1.5rem auto 1rem;
+  }
+  .card-logo {
+    width: min(50%, 10rem);
+  }
+  .sponsors {
+    gap: .75rem;
+    padding: .75rem;
+    margin: 1rem auto 1.5rem;
+  }
   .sponsors .sponsor-logo {
-    height: 2rem; /* ~32px */
+    height: 2.5rem; /* ~40px em smartphone */
   }
 }
