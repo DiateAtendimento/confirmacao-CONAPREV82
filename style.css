@@ -126,13 +126,11 @@ html, body {
   object-fit: contain;
 }
 
-/* Overlay cobre toda a tela e centraliza o conteúdo */
+/* Modal overlay */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
@@ -143,22 +141,50 @@ html, body {
   display: none !important;
 }
 
-/* Container do modal */
+/* Container do modal – mesmo azul do card, cantos arredondados e sombra suave */
 .modal-container {
-  background: #ffffff;
-  border-radius: 1rem;
+  background: #0c3a75;        /* azul escuro do card */
+  color: #fff;                /* texto branco */
+  border-radius: 2rem;        /* bordas bem arredondadas */
   padding: 2rem 1.5rem;
   max-width: 360px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.4);
   position: relative;
 }
 
-/* Botão fechar posicionado sempre dentro do container */
-.modal-close {
-  margin-top: 1.5rem;
+/* Container da animação centralizado */
+#modalLottie {
+  margin: 0 auto 1.5rem;
+  width: 120px;
+  height: 120px;
 }
+
+/* Texto do modal — um pouco maior e com espaçamento */
+.modal-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* Botão “Fechar” no modal – igual ao confirmar, mas menor */
+.modal-close {
+  background: #fdbf41;        /* mesmo amarelo */
+  color: #000;
+  border: none;
+  padding: 0.75rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: filter .2s;
+}
+.modal-close:hover {
+  filter: brightness(1.05);
+}
+
 
 
 /* 7. Ajustes para mobile (<=576px) */
