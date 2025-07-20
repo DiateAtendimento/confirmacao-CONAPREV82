@@ -1,45 +1,53 @@
-// Janela de confirmação permitida:
-// Dia 1 => 12/08/2025 08:30–17:30
-// Dia 2 => 13/08/2025 08:30–13:00
+// script.js
 
-const API_URL   = 'https://backend-confirmacao-conaprev82.onrender.com';
-const confirmBtn = document.getElementById('confirmBtn');
-const cpfInput   = document.getElementById('cpfInput');
-const msgDiv     = document.getElementById('msg');
+const API_URL      = 'https://backend-confirmacao-conaprev82.onrender.com';
+const confirmBtn   = document.getElementById('confirmBtn');
+const cpfInput     = document.getElementById('cpfInput');
+
+// Elementos do modal
+const modalOverlay = document.getElementById('modalOverlay');
+const modalLottie  = document.getElementById('modalLottie');
+const modalText    = document.getElementById('modalText');
+const modalClose   = document.getElementById('modalClose');
+let lottieAnim;
+
+// Abre o modal com animação Lottie e texto
+function showModal(animationDataPath, htmlContent) {
+  // Remove animação anterior, se houver
+  if (lottieAnim) {
+    lottieAnim.destroy();
+  }
+  // Carrega nova animação via path
+  lottieAnim = lottie.loadAnimation({
+    container: modalLottie,
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    path: animationDataPath
+  });
+
+  modalText.innerHTML = htmlContent;
+  modalOverlay.classList.remove('hidden');
+}
+
+// Fecha o modal ao clicar em fechar e limpa o CPF
+modalClose.addEventListener('click', () => {
+  modalOverlay.classList.add('hidden');
+  cpfInput.value = '';
+});
+
+// Extrai o primeiro nome do nome completo
+function primeiroNome(nomeCompleto) {
+  return nomeCompleto.split(' ')[0];
+}
 
 confirmBtn.addEventListener('click', async () => {
-  msgDiv.textContent = '';
-  msgDiv.style.color = '#fff';
-  const cpf = cpfInput.value.replace(/\D/g,'');
+  const cpf = cpfInput.value.replace(/\D/g, '');
   if (!/^\d{11}$/.test(cpf)) {
-    msgDiv.textContent = 'CPF inválido! Digite 11 números.';
+    showModal('animacoes/confirm-error.json', '<p>CPF inválido! Digite 11 números.</p>');
     return;
   }
 
-  const now     = new Date();
-  const dia     = now.getDate(), mes = now.getMonth()+1, ano = now.getFullYear();
-  const hh      = now.getHours(), mm = now.getMinutes();
-  const minutes = hh*60 + mm;
-
-  let permitido = false;
-  let diaEvento = '';
-
-  if (ano === 2025 && mes === 8 && dia === 12) {
-    permitido = (minutes >= 510 && minutes <= 1050); // 08:30–17:30
-    diaEvento = '12/08/2025';
-  } else if (ano === 2025 && mes === 8 && dia === 13) {
-    permitido = (minutes >= 510 && minutes <= 780);  // 08:30–13:00
-    diaEvento = '13/08/2025';
-  }
-
-  if (!permitido) {
-    msgDiv.textContent = `Fora do horário permitido para o dia ${diaEvento}.\n` +
-                         `Janela de confirmação: ${diaEvento} ` +
-                         `${diaEvento==='12/08/2025'?'08:30–17:30':'08:30–13:00'}.`;
-    return;
-  }
-
-  // Chamada real ao backend
   try {
     const resp = await fetch(`${API_URL}/confirm`, {
       method: 'POST',
@@ -47,17 +55,51 @@ confirmBtn.addEventListener('click', async () => {
       body: JSON.stringify({ cpf })
     });
     const json = await resp.json();
-    if (!resp.ok) throw new Error(json.error || 'Erro inesperado.');
 
-    // Exibe todos os dados vindos do backend
-    msgDiv.style.color = '#7ed957';
-    msgDiv.innerHTML = 
-      `Presença confirmada em <strong>${json.dia}</strong><br>` +
-      `Inscrição: <strong>${json.inscricao}</strong><br>` +
-      `Nome: <strong>${json.nome}</strong><br>` +
-      `${json.data} às ${json.hora}`;
+    if (resp.status === 409) {
+      const ordinal = json.dia === 'Dia1' ? '1º dia' : '2º dia';
+      const nome1   = primeiroNome(json.nome);
+      const dupContent = `
+        <p>Olá ${nome1}, que bom ver você novamente.</p>
+        <p>Você já confirmou sua participação no ${ordinal} do 82ª Reunião do CONAPREV.</p>
+        <hr>
+        <p><strong>Dados da sua confirmação:</strong></p>
+        <p>
+          Nome: ${json.nome}<br>
+          CPF: ${cpf}<br>
+          Nº inscrição: ${json.inscricao}<br>
+          Confirmado em: ${json.data} às ${json.hora}
+        </p>
+      `;
+      showModal('animacoes/confirm-duplicate.json', dupContent);
+      return;
+    }
+
+    if (!resp.ok) {
+      const tipo = json.error.includes('não inscrito')
+        ? 'Lamentamos muito, mas você não fez sua inscrição para o 82ª Reunião do CONAPREV.'
+        : `Olá ${primeiroNome(json.nome || '')}, você não possui número de inscrição.`;
+      showModal('animacoes/confirm-error.json', `<p>${tipo}</p>`);
+      return;
+    }
+
+    // Sucesso na confirmação
+    const ordinal = json.dia === 'Dia1' ? '1º dia' : '2º dia';
+    const nome1   = primeiroNome(json.nome);
+    const successContent = `
+      <p>Olá ${nome1}, que bom ver você por aqui,</p>
+      <p>no ${ordinal} do 82ª Reunião do CONAPREV.</p>
+      <p>Sua participação foi confirmada!</p>
+      <hr>
+      <p>
+        Inscrição: ${json.inscricao}<br>
+        Data: ${json.data}<br>
+        Hora: ${json.hora}
+      </p>
+    `;
+    showModal('animacoes/confirm-success.json', successContent);
+
   } catch (err) {
-    msgDiv.style.color = '#f44336';
-    msgDiv.textContent = err.message;
+    showModal('animacoes/confirm-error.json', `<p>Erro ao confirmar: ${err.message}</p>`);
   }
 });

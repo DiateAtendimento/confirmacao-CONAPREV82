@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Confirmação 82ª CONAPREV</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Biblioteca Lottie -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
 </head>
 <body>
   <div class="page-bg">
@@ -13,7 +15,6 @@
       <img src="/imagens/logo-mps.svg" alt="MPS" class="logo">
       <img src="/imagens/logo-spprev.svg" alt="SPPREV" class="logo">
       <img src="/imagens/logo-abipem.svg" alt="ABIPEM" class="logo">
-    
     </header>
 
     <!-- Card de confirmação -->
@@ -27,8 +28,8 @@
              maxlength="11"
              inputmode="numeric">
       <button id="confirmBtn" class="btn-confirm">Confirmar</button>
-
       <div id="msg" class="message"></div>
+    </main>
 
     <!-- Rodapé de patrocinadores -->
     <footer class="sponsors">
@@ -39,6 +40,16 @@
       <img src="/imagens/empire.svg" alt="Empire" class="sponsor-logo">
       <img src="/imagens/xp.svg" alt="XP" class="sponsor-logo">
     </footer>
+  </div>
+
+  <!-- Modal genérico oculto -->
+  <div id="modalOverlay" class="modal-overlay hidden">
+    <div class="modal-container">
+      <!-- Container para animação Lottie -->
+      <div id="modalLottie" style="width:120px; height:120px; margin:0 auto;"></div>
+      <div id="modalText" class="modal-text"></div>
+      <button id="modalClose" class="modal-close">Fechar</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
