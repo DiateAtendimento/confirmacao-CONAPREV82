@@ -149,5 +149,3 @@ confirmBtn.addEventListener('click', async () => {
   }
 });
 
-// Liga tudo
-confirmBtn.addEventListener('click', handleConfirm);
