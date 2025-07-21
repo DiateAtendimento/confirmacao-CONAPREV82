@@ -144,4 +144,3 @@ confirmBtn.addEventListener('click', async () => {
     );
   }
 });
-```
