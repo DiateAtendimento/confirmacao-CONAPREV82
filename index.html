@@ -13,33 +13,38 @@
   <div class="page-bg">
     <!-- Header com logos -->
     <header class="header-logos">
-      <img src="/imagens/logo-mps.svg" alt="MPS" class="logo">
-      <img src="/imagens/logo-spprev.svg" alt="SPPREV" class="logo">
-      <img src="/imagens/logo-abipem.svg" alt="ABIPEM" class="logo">
+      <img src="/imagens/logo-mps.svg"       alt="MPS"    class="logo">
+      <img src="/imagens/logo-spprev.svg"    alt="SPPREV" class="logo">
+      <img src="/imagens/logo-abipem.svg"    alt="ABIPEM" class="logo">
     </header>
 
     <!-- Card de confirmação -->
     <main class="card">
       <img src="/imagens/logo-conaprev.svg" alt="CONAPREV" class="card-logo">
-      <p class="card-text">Confirme sua presença na reunião<br><strong>82ª CONAPREV</strong></p>
-      <input type="text"
-             id="cpfInput"
-             class="cpf-field"
-             placeholder="Digite seu CPF. Apenas números"
-             maxlength="11"
-             inputmode="numeric">
+      <p class="card-text">
+        Confirme sua presença na reunião<br>
+        <strong>82ª CONAPREV</strong>
+      </p>
+      <input
+        type="text"
+        id="cpfInput"
+        class="cpf-field"
+        placeholder="Digite seu CPF. Apenas números"
+        maxlength="11"
+        inputmode="numeric"
+      >
       <button id="confirmBtn" class="btn-confirm">Confirmar</button>
       <div id="msg" class="message"></div>
     </main>
 
     <!-- Rodapé de patrocinadores -->
     <footer class="sponsors">
-      <img src="/imagens/prevcom.svg" alt="Prevcom" class="sponsor-logo">
-      <img src="/imagens/agenda.svg" alt="Agenda" class="sponsor-logo">
-      <img src="/imagens/vinci.svg" alt="Vinci" class="sponsor-logo">
-      <img src="/imagens/mag.svg" alt="MAG" class="sponsor-logo">
-      <img src="/imagens/empire.svg" alt="Empire" class="sponsor-logo">
-      <img src="/imagens/xp.svg" alt="XP" class="sponsor-logo">
+      <img src="/imagens/prevcom.svg"  alt="Prevcom" class="sponsor-logo">
+      <img src="/imagens/agenda.svg"   alt="Agenda"  class="sponsor-logo">
+      <img src="/imagens/vinci.svg"    alt="Vinci"   class="sponsor-logo">
+      <img src="/imagens/mag.svg"      alt="MAG"     class="sponsor-logo">
+      <img src="/imagens/empire.svg"   alt="Empire"  class="sponsor-logo">
+      <img src="/imagens/xp.svg"       alt="XP"      class="sponsor-logo">
     </footer>
   </div>
 
@@ -47,7 +52,7 @@
   <div id="modalOverlay" class="modal-overlay hidden">
     <div class="modal-container">
       <!-- Container para animação Lottie -->
-      <div id="modalLottie" style="width:120px; height:120px; margin:0 auto;"></div>
+      <div id="modalLottie"></div>
       <div id="modalText" class="modal-text"></div>
       <button id="modalClose" class="modal-close">Fechar</button>
     </div>

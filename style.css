@@ -126,11 +126,14 @@ html, body {
   object-fit: contain;
 }
 
-/* Modal overlay */
+/* --------------------------------------------------
+   MODAL ESTILIZADO
+   -------------------------------------------------- */
+
+/* backdrop e container */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
@@ -141,36 +144,72 @@ html, body {
   display: none !important;
 }
 
-/* Container do modal – mesmo azul do card, cantos arredondados e sombra suave */
+/* quando estiver em “loading” ESSE botão some */
+.modal-overlay.loading .modal-close {
+  display: none;
+}
+
+/* opcional: cargo de texto mais suave no loading */
+.modal-overlay.loading .modal-text p {
+  opacity: 0.8;
+}
+
+/* cartão interno: mesmo azul do card, cantos generosos */
 .modal-container {
-  background: #0c3a75;        /* azul escuro do card */
-  color: #fff;                /* texto branco */
-  border-radius: 2rem;        /* bordas bem arredondadas */
+  background: #0c3a75;
+  color: #fff;
+  border-radius: 1.5rem;
   padding: 2rem 1.5rem;
-  max-width: 360px;
+  max-width: 380px;
   width: 90%;
   text-align: center;
   box-shadow: 0 12px 24px rgba(0,0,0,0.4);
   position: relative;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Container da animação centralizado */
+/* lottie */
 #modalLottie {
-  margin: 0 auto 1.5rem;
   width: 120px;
   height: 120px;
+  margin: 0 auto 1.25rem;
 }
 
-/* Texto do modal — um pouco maior e com espaçamento */
-.modal-text {
+/* título principal */
+.modal-text h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* parágrafos de texto */
+.modal-text p {
   font-size: 1rem;
   line-height: 1.6;
-  margin-bottom: 1.5rem;
+  margin: 0.5rem 0;
 }
 
-/* Botão “Fechar” no modal – igual ao confirmar, mas menor */
+/* linha separadora */
+.modal-text hr {
+  border: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.3);
+  margin: 1rem 0;
+}
+
+/* bloco de detalhes alinhado à esquerda */
+.modal-text .details {
+  text-align: left;
+  margin: 0 auto;
+  max-width: 260px;
+}
+.modal-text .details p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+/* botão fechar, idêntico ao confirmar mas menor */
 .modal-close {
-  background: #fdbf41;        /* mesmo amarelo */
+  background: #fdbf41;
   color: #000;
   border: none;
   padding: 0.75rem 2.5rem;
@@ -180,10 +219,23 @@ html, body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   cursor: pointer;
   transition: filter .2s;
+  margin-top: 1rem;
 }
 .modal-close:hover {
   filter: brightness(1.05);
 }
+
+/* esconder fechar no modal de carregando */
+.modal-overlay.loading .modal-close {
+  display: none;
+}
+
+/* texto “Carregando…” menor e mais suave */
+.modal-overlay.loading .modal-text p {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.8);
+}
+
 
 
 

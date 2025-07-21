@@ -11,42 +11,70 @@ const modalText    = document.getElementById('modalText');
 const modalClose   = document.getElementById('modalClose');
 let lottieAnim;
 
-// Abre o modal com animação Lottie e texto
-function showModal(animationDataPath, htmlContent) {
-  // Remove animação anterior, se houver
-  if (lottieAnim) {
-    lottieAnim.destroy();
-  }
-  // Carrega nova animação via path
+/**
+ * Exibe o modal:
+ * @param {string} animationPath ‒ caminho do JSON da Lottie
+ * @param {string} htmlContent   ‒ conteúdo HTML (título, texto, etc)
+ * @param {object} opts          ‒ { hideClose:boolean, loop:boolean }
+ */
+function showModal(animationPath, htmlContent, opts = {}) {
+  const { hideClose = false, loop = false } = opts;
+
+  // destrói animação anterior
+  if (lottieAnim) lottieAnim.destroy();
+
+  // carrega Lottie
   lottieAnim = lottie.loadAnimation({
     container: modalLottie,
     renderer: 'svg',
-    loop: false,
+    loop,
     autoplay: true,
-    path: animationDataPath
+    path: animationPath
   });
 
+  // configura HTML
   modalText.innerHTML = htmlContent;
+
+  // mostra overlay
   modalOverlay.classList.remove('hidden');
+
+  // toggle botão fechar
+  if (hideClose) {
+    modalOverlay.classList.add('loading');
+  } else {
+    modalOverlay.classList.remove('loading');
+  }
 }
 
-// Fecha o modal ao clicar em fechar e limpa o CPF
+// fecha modal e limpa cpf
 modalClose.addEventListener('click', () => {
   modalOverlay.classList.add('hidden');
+  modalOverlay.classList.remove('loading');
+  if (lottieAnim) lottieAnim.destroy();
   cpfInput.value = '';
 });
 
-// Extrai o primeiro nome do nome completo
-function primeiroNome(nomeCompleto) {
-  return nomeCompleto.split(' ')[0];
+// pega o primeiro nome
+function primeiroNome(fullName) {
+  return fullName.split(' ')[0] || fullName;
 }
 
 confirmBtn.addEventListener('click', async () => {
   const cpf = cpfInput.value.replace(/\D/g, '');
   if (!/^\d{11}$/.test(cpf)) {
-    showModal('animacoes/confirm-error.json', '<p>CPF inválido! Digite 11 números.</p>');
-    return;
+    return showModal(
+      'animacoes/confirm-error.json',
+      `<h2>Ops!</h2>
+      <p>CPF inválido! Digite 11 números.</p>`
+    );
   }
+
+  // mostra loading (loop) e oculta o fechar
+  showModal(
+    'animacoes/carregando.json',
+    `<p>Carregando…</p>`,
+    { hideClose: true, loop: true }
+  );
 
   try {
     const resp = await fetch(`${API_URL}/confirm`, {
@@ -56,50 +84,70 @@ confirmBtn.addEventListener('click', async () => {
     });
     const json = await resp.json();
 
-    if (resp.status === 409) {
+    // 1) duplicidade: o backend devolve { message: "Inscrição já confirmada em DD/MM/... às HH:MM." }
+    if (json.message) {
+      // extrai data e hora da string do backend
+      const [,rest] = json.message.split('Inscrição já confirmada em ');
+      const [data, horaWithDot] = rest.split(' às ');
+      const hora = horaWithDot.replace('.', '');
+      const nome1 = primeiroNome(json.nome || '');
       const ordinal = json.dia === 'Dia1' ? '1º dia' : '2º dia';
-      const nome1   = primeiroNome(json.nome);
-      const dupContent = `
+
+      const html = `
+        <h2>Você já confirmou!</h2>
         <p>Olá ${nome1}, que bom ver você novamente.</p>
-        <p>Você já confirmou sua participação no ${ordinal} do 82ª Reunião do CONAPREV.</p>
+        <p>Presença registrada no ${ordinal} dia **da** 82ª Reunião do CONAPREV.</p>
         <hr>
-        <p><strong>Dados da sua confirmação:</strong></p>
-        <p>
-          Nome: ${json.nome}<br>
-          CPF: ${cpf}<br>
-          Nº inscrição: ${json.inscricao}<br>
-          Confirmado em: ${json.data} às ${json.hora}
-        </p>
+        <div class="details">
+          <p><strong>Nome:</strong> ${json.nome}</p>
+          <p><strong>CPF:</strong> ${cpf}</p>
+          <p><strong>Data:</strong> ${data}</p>
+          <p><strong>Hora:</strong> ${hora}</p>
+        </div>
       `;
-      showModal('animacoes/confirm-duplicate.json', dupContent);
-      return;
+      return showModal('animacoes/confirm-duplicate.json', html);
     }
 
+    // 2) erro no OK (404 ou 400)
     if (!resp.ok) {
-      const tipo = json.error.includes('não inscrito')
-        ? 'Lamentamos muito, mas você não fez sua inscrição para o 82ª Reunião do CONAPREV.'
-        : `Olá ${primeiroNome(json.nome || '')}, você não possui número de inscrição.`;
-      showModal('animacoes/confirm-error.json', `<p>${tipo}</p>`);
-      return;
+      let msg;
+      if (json.error && json.error.includes('não inscrito')) {
+        msg = 'Lamentamos muito, mas você não fez sua inscrição para o 82ª Reunião do CONAPREV.';
+      } else if (json.error) {
+        msg = `Olá ${primeiroNome(json.nome||'')}, você não possui número de inscrição.`;
+      } else {
+        msg = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+      }
+      return showModal(
+        'animacoes/confirm-error.json',
+        `<h2>Ops!</h2><p>${msg}</p>`
+      );
     }
 
-    // Sucesso na confirmação
+    // 3) sucesso
+    const nome1 = primeiroNome(json.nome);
     const ordinal = json.dia === 'Dia1' ? '1º dia' : '2º dia';
-    const nome1   = primeiroNome(json.nome);
-    const successContent = `
-      <p>Olá ${nome1}, que bom ver você por aqui,</p>
-      <p>no ${ordinal} do 82ª Reunião do CONAPREV.</p>
+    const html = `
+      <h2>Confirmação realizada!</h2>
+      <p>Olá ${nome1}, que bom ver você por aqui</p>
+      <p>no ${ordinal} dia **da** 82ª Reunião do CONAPREV,</p>
       <p>Sua participação foi confirmada!</p>
       <hr>
-      <p>
-        Inscrição: ${json.inscricao}<br>
-        Data: ${json.data}<br>
-        Hora: ${json.hora}
-      </p>
+      <div class="details">
+        <p><strong>Inscrição:</strong> ${json.inscricao}</p>
+        <p><strong>Data:</strong> ${json.data}</p>
+        <p><strong>Hora:</strong> ${json.hora}</p>
+      </div>
     `;
-    showModal('animacoes/confirm-success.json', successContent);
+    showModal('animacoes/confirm-success.json', html);
 
-  } catch (err) {
-    showModal('animacoes/confirm-error.json', `<p>Erro ao confirmar: ${err.message}</p>`);
+  } catch (e) {
+    showModal(
+      'animacoes/confirm-error.json',
+      `<h2>Ops!</h2><p>Erro ao confirmar: ${e.message}</p>`
+    );
   }
 });
+
+// Liga tudo
+confirmBtn.addEventListener('click', handleConfirm);
