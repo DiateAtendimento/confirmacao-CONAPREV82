@@ -88,11 +88,11 @@ confirmBtn.addEventListener('click', async () => {
       const ordinal      = json.dia === 'Dia1' ? '1º dia' : '2º dia';
 
       const html = `
-        <h2>Você já confirmou!</h2>
-        <p>Olá ${nome1}, que bom ver você novamente.</p>
+        <h2>Olá ${nome1}, você já confirmou!</h2>
         <p>Presença registrada no ${ordinal} da 82ª Reunião do CONAPREV.</p>
         <hr>
         <div class="details">
+         <p><strong>Inscrição:</strong> ${json.inscricao}</p>
           <p><strong>Nome:</strong> ${json.nome}</p>
           <p><strong>CPF:</strong> ${cpf}</p>
           <p><strong>Data:</strong> ${data}</p>
@@ -124,12 +124,13 @@ confirmBtn.addEventListener('click', async () => {
     const ordinal = json.dia === 'Dia1' ? '1º dia' : '2º dia';
     const html    = `
       <h2>Confirmação realizada!</h2>
-      <p>Olá ${nome1}, que bom ver você por aqui</p>
-      <p>no ${ordinal} da 82ª Reunião do CONAPREV,</p>
-      <p>Sua participação foi confirmada!</p>
+      <p>Olá ${nome1}, que bom te ver por aqui! </p>
+      <p>Sua participação no ${ordinal} da 82ª Reunião do CONAPREV</p>
+      <p>está confirmada confirmada!</p>
       <hr>
       <div class="details">
         <p><strong>Inscrição:</strong> ${json.inscricao}</p>
+        <p><strong>Nome:</strong> ${json.nome}</p>
         <p><strong>Data:</strong> ${json.data}</p>
         <p><strong>Hora:</strong> ${json.hora}</p>
       </div>

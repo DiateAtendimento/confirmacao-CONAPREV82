@@ -1,6 +1,6 @@
 /* styles.css */
 
-/* 0. Reset e container geral */
+/* 0. Reset */
 * {
   margin: 0;
   padding: 0;
@@ -12,83 +12,88 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-/* Fundo em degradê */
+/* 1. Fundo e container geral */
 .page-bg {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   background: linear-gradient(90deg, #082b5d 0%, #005ad1 100%);
   min-height: 100vh;
-  padding: 1rem 0;
+  padding: clamp(1rem, 5vw, 3rem);
 }
 
-/* 1. Header com logos */
+/* 2. Imagens fluidas */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 3. Header com logos */
 .header-logos {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  
-  border-radius: 1rem;
-  padding: 1rem;
+  align-items: center;
+  gap: clamp(0.5rem, 3vw, 1.5rem);
   width: 100%;
-  max-width: 600px;      /* aumenta a largura no desktop */
-  margin: 1.5rem auto 0;
+  max-width: 1080px;
+  margin: 0 auto clamp(1rem, 5vw, 2rem);
+  padding: clamp(0.5rem, 3vw, 1rem);
+  border-radius: clamp(0.5rem, 2vw, 1rem);
 }
 .header-logos .logo {
-  height: 8rem;          /* 128px no desktop */
-  width: auto;
+  height: clamp(4rem, 12vw, 8rem);
   object-fit: contain;
 }
 
-/* 2. Card de confirmação */
+/* 4. Card de confirmação */
 .card {
   background: #0c3a75;
-  border-radius: 2rem;
-  padding: 2.5rem 1.5rem;
+  border-radius: clamp(1rem, 4vw, 2rem);
+  padding: clamp(1.5rem, 6vw, 2.5rem);
   width: 100%;
-  max-width: 360px;      /* card mais estreito para manter foco */
-  margin: 2rem auto 6rem;
+  max-width: 600px;
+  margin: clamp(2rem, 6vw, 3rem) auto clamp(4rem, 8vw, 6rem);
   text-align: center;
   box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 .card-logo {
-  width: min(40%, 12rem);
-  height: auto;
-  margin-bottom: 1.5rem;
+  width: clamp(80px, 20vw, 12rem);
+  margin: 0 auto clamp(1rem, 4vw, 1.5rem);
+  display: block;
 }
 .card-text {
-  color: #ffffff;
-  font-size: 1.1rem;
+  color: #fff;
+  font-size: clamp(1rem, 4vw, 1.2rem);
   line-height: 1.4;
-  margin-bottom: 1.5rem;
+  margin-bottom: clamp(1rem, 4vw, 1.5rem);
 }
 
-/* 3. Campo de CPF */
+/* 5. Campo de CPF */
 .cpf-field {
   width: 100%;
-  padding: .75rem 1rem;
-  border-radius: 50px;
+  padding: clamp(.5rem, 2.5vw, .75rem) clamp(1rem, 5vw, 1rem);
+  border-radius: 9999px;
   border: none;
-  font-size: 1rem;
+  font-size: clamp(.9rem, 3vw, 1rem);
   text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
   background: #fff;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  margin-bottom: clamp(1.5rem, 5vw, 2rem);
 }
 .cpf-field::placeholder {
   color: #999;
 }
 
-/* 4. Botão Confirmar */
+/* 6. Botão Confirmar */
 .btn-confirm {
   background: #fdbf41;
   color: #000;
   border: none;
-  padding: .75rem 3rem;
-  border-radius: 50px;
-  font-size: 1.25rem;
+  padding: clamp(.5rem, 2.5vw, .75rem) clamp(1.5rem, 6vw, 3rem);
+  border-radius: 9999px;
+  font-size: clamp(1rem, 4vw, 1.25rem);
   font-weight: 500;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   cursor: pointer;
@@ -98,43 +103,39 @@ html, body {
   filter: brightness(1.05);
 }
 
-/* 5. Mensagens de feedback */
+/* 7. Mensagens de feedback */
 .message {
-  color: #ffffff;
-  font-size: .95rem;
+  color: #fff;
+  font-size: clamp(.8rem, 3vw, .95rem);
   min-height: 1.4em;
   white-space: pre-line;
-  margin-top: .5rem;
+  margin-top: clamp(.5rem, 2vw, .75rem);
 }
 
-/* 6. Rodapé de patrocinadores */
+/* 8. Rodapé de patrocinadores */
 .sponsors {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
+  align-items: center;
+  gap: clamp(.5rem, 3vw, 1.5rem);
   background: #fff;
-  border-radius: 1rem;
-  padding: 1rem;
+  border-radius: clamp(.5rem, 2vw, 1rem);
+  padding: clamp(.5rem, 3vw, 1rem);
   width: 100%;
-  max-width: 600px;      /* mesma largura do header no desktop */
-  margin: 1.5rem auto 2rem;
+  max-width: 1080px;
+  margin: 0 auto clamp(2rem, 6vw, 3rem);
 }
 .sponsors .sponsor-logo {
-  height: 3rem;          /* ~48px em desktop */
-  width: auto;
+  height: clamp(2rem, 6vw, 3rem);
   object-fit: contain;
 }
 
-/* --------------------------------------------------
-   MODAL ESTILIZADO
-   -------------------------------------------------- */
-
-/* backdrop e container */
+/* 9. Modal */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  inset: 0;
+  background: rgba(0,0,0,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,125 +144,78 @@ html, body {
 .modal-overlay.hidden {
   display: none !important;
 }
-
-/* quando estiver em “loading” ESSE botão some */
 .modal-overlay.loading .modal-close {
   display: none;
 }
-
-/* opcional: cargo de texto mais suave no loading */
-.modal-overlay.loading .modal-text p {
-  opacity: 0.8;
-}
-
-/* cartão interno: mesmo azul do card, cantos generosos */
 .modal-container {
   background: #0c3a75;
   color: #fff;
-  border-radius: 1.5rem;
-  padding: 2rem 1.5rem;
+  border-radius: clamp(1rem, 4vw, 1.5rem);
+  padding: clamp(1rem, 5vw, 2rem);
+  width: 90vw;
   max-width: 380px;
-  width: 90%;
   text-align: center;
   box-shadow: 0 12px 24px rgba(0,0,0,0.4);
-  position: relative;
   font-family: 'Segoe UI', sans-serif;
 }
-
-/* lottie */
 #modalLottie {
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 1.25rem;
+  width: clamp(80px, 20vw, 120px);
+  height: clamp(80px, 20vw, 120px);
+  margin: 0 auto clamp(1rem, 4vw, 1.25rem);
 }
-
-/* título principal */
 .modal-text h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: clamp(1.25rem, 6vw, 1.5rem);
+  margin-bottom: clamp(.5rem, 3vw, .5rem);
 }
-
-/* parágrafos de texto */
 .modal-text p {
-  font-size: 1rem;
+  font-size: clamp(.9rem, 3.5vw, 1rem);
   line-height: 1.6;
-  margin: 0.5rem 0;
+  margin: clamp(.25rem, 2vw, .5rem) 0;
 }
-
-/* linha separadora */
 .modal-text hr {
   border: 0;
   height: 1px;
   background: rgba(255,255,255,0.3);
-  margin: 1rem 0;
+  margin: clamp(.5rem, 3vw, 1rem) 0;
 }
-
-/* bloco de detalhes alinhado à esquerda */
 .modal-text .details {
   text-align: left;
   margin: 0 auto;
-  max-width: 260px;
+  max-width: clamp(200px, 70vw, 260px);
 }
 .modal-text .details p {
-  margin: 0.25rem 0;
-  font-size: 0.95rem;
+  margin: clamp(.25rem, 2vw, .25rem) 0;
+  font-size: clamp(.8rem, 3vw, .95rem);
 }
-
-/* botão fechar, idêntico ao confirmar mas menor */
 .modal-close {
   background: #fdbf41;
   color: #000;
   border: none;
-  padding: 0.75rem 2.5rem;
-  border-radius: 50px;
-  font-size: 1rem;
+  padding: clamp(.5rem, 3vw, .75rem) clamp(1.5rem, 6vw, 2.5rem);
+  border-radius: 9999px;
+  font-size: clamp(.9rem, 3.5vw, 1rem);
   font-weight: 500;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   cursor: pointer;
   transition: filter .2s;
-  margin-top: 1rem;
+  margin-top: clamp(.75rem, 4vw, 1rem);
 }
 .modal-close:hover {
   filter: brightness(1.05);
 }
 
-/* esconder fechar no modal de carregando */
-.modal-overlay.loading .modal-close {
-  display: none;
+/* 10. Breakpoints extras para telas maiores */
+@media (min-width: 600px) {
+  .card { max-width: 480px; }
+}
+@media (min-width: 900px) {
+  .card { max-width: 560px; }
+}
+@media (min-width: 1200px) {
+  .card { max-width: 640px; }
 }
 
-/* texto “Carregando…” menor e mais suave */
-.modal-overlay.loading .modal-text p {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.8);
-}
-
-
-
-
-/* 7. Ajustes para mobile (<=576px) */
-@media (max-width: 576px) {
-  /* Header e patrocinadores estreitam */
-  .header-logos,
-  .sponsors {
-    max-width: 360px;
-    gap: .75rem;
-    padding: .75rem;
-    margin: 1rem auto;
-  }
-  .header-logos .logo {
-    height: 5rem;        /* ~80px em smartphone */
-  }
-  .sponsors .sponsor-logo {
-    height: 2.5rem;      /* ~40px em smartphone */
-  }
-
-  /* Card */
-  .card {
-    padding: 2rem 1rem;
-    margin: 1.5rem auto 1rem;
-  }
-  .card-logo {
-    width: min(50%, 10rem);
-  }
+/* 11. Fallback para telas muito estreitas (<320px) */
+@media (max-width: 320px) {
+  .card-text { font-size: clamp(.9rem, 5vw, 1.1rem); }
 }
