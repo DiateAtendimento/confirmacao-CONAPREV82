@@ -20,7 +20,12 @@ html, body {
   align-items: center;
   background: linear-gradient(90deg, #082b5d 0%, #005ad1 100%);
   min-height: 100vh;
-  padding: clamp(1rem, 5vw, 3rem);
+
+  /* ↓ padding: top | horizontal | bottom */
+  padding: 
+    clamp(0.5rem, 3vw, 1rem)   /* top: menor espaço acima do header */
+    clamp(1rem, 5vw, 3rem)     /* left/right: margens laterais responsivas */
+    clamp(1.5rem, 5vw, 3rem);  /* bottom: espaçamento abaixo do footer */
 }
 
 /* 2. Imagens fluidas */
