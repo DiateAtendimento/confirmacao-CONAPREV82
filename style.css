@@ -9,23 +9,24 @@
 html, body {
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;  /* impede qualquer scroll na página */
   font-family: Arial, sans-serif;
 }
-
 /* 1. Fundo e container geral */
 .page-bg {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* header no topo, footer no rodapé */
+  align-items: center;            /* centraliza horizontalmente */
+  width: 100%;
+  height: 100%;                   /* ocupa 100% da viewport */
+  /* padding: topo | laterais | rodapé */
+  padding: clamp(.5rem, 3vw, 1rem) 
+          clamp(1rem, 5vw, 3rem) 
+          clamp(.5rem, 3vw, 1rem);
   background: linear-gradient(90deg, #082b5d 0%, #005ad1 100%);
-  min-height: 100vh;
-
-  /* ↓ padding: top | horizontal | bottom */
-  padding: 
-    clamp(0.5rem, 3vw, 1rem)   /* top: menor espaço acima do header */
-    clamp(1rem, 5vw, 3rem)     /* left/right: margens laterais responsivas */
-    clamp(1.5rem, 5vw, 3rem);  /* bottom: espaçamento abaixo do footer */
 }
 
 /* 2. Imagens fluidas */
@@ -58,11 +59,12 @@ img {
   background: #0c3a75;
   border-radius: clamp(1rem, 4vw, 2rem);
   padding: clamp(1.5rem, 6vw, 2.5rem);
+  margin: 0;             
   width: 100%;
   max-width: 600px;
-  margin: 0 auto;
   text-align: center;
   box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+
 }
 .card-logo {
   width: clamp(80px, 20vw, 12rem);
@@ -130,7 +132,7 @@ img {
   padding: clamp(.5rem, 3vw, 1rem);
   width: 100%;
   max-width: 1080px;
-  margin: 0 auto;
+  margin: 0;
 }
 .sponsors .sponsor-logo {
   height: clamp(2rem, 6vw, 3rem);
