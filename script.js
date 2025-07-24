@@ -32,8 +32,9 @@ function showModal(animationPath, htmlContent, opts = {}) {
     path:      animationPath
   });
 
-  // configura conteúdo
-  modalText.innerHTML = htmlContent;
+  // nada cai no innerHTML sem sanitização
+  modalText.innerHTML = DOMPurify.sanitize(htmlContent);
+  
   modalOverlay.classList.remove('hidden');
   // esconde botao fechar se hideClose=true
   modalOverlay.classList.toggle('loading', hideClose);
