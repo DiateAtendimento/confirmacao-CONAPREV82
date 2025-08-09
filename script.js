@@ -80,13 +80,14 @@ confirmBtn.addEventListener('click', async () => {
     const json = await resp.json();
 
     // 1) Caso de duplicidade (status 409)
-    if (json.message) {
-      // parseia data e hora da mensagem do backend
-      const [, rest]     = json.message.split('Inscrição já confirmada em ');
-      const [data, horaWithDot] = rest.split(' às ');
-      const hora         = horaWithDot.replace('.', '');
-      const nome1        = primeiroNome(json.nome);
-      const ordinal      = json.dia === 'Dia1' ? '1º dia' : '2º dia';
+    if (resp.status === 409 && typeof json.message === 'string' && json.message.includes('Inscrição já confirmada em ')) {
+      // parse robusto
+      const m = json.message.match(/Inscrição já confirmada em (.+) às (.+)\.?/);
+      const data = m?.[1] ?? '';
+      const hora = (m?.[2] ?? '').replace('.', '');
+
+      const nome1   = primeiroNome(json.nome || '');
+      const ordinal = json.dia === 'Dia1' ? '1º dia' : '2º dia';
 
       const html = `
         <h2>Olá ${nome1}, você já confirmou!</h2>
@@ -102,6 +103,7 @@ confirmBtn.addEventListener('click', async () => {
       `;
       return showModal('animacoes/confirm-duplicate.json', html);
     }
+
 
     // 2) Erros de requisição (400 ou 404)
     if (!resp.ok) {
