@@ -93,7 +93,7 @@ confirmBtn.addEventListener('click', async () => {
         <p>Presença registrada no ${ordinal} da 82ª Reunião do CONAPREV.</p>
         <hr>
         <div class="details">
-         <p><strong>Inscrição:</strong> ${json.inscricao}</p>
+          <p><strong>Inscrição:</strong> ${json.inscricao}</p>
           <p><strong>Nome:</strong> ${json.nome}</p>
           <p><strong>CPF:</strong> ${cpf}</p>
           <p><strong>Data:</strong> ${data}</p>
@@ -105,12 +105,29 @@ confirmBtn.addEventListener('click', async () => {
 
     // 2) Erros de requisição (400 ou 404)
     if (!resp.ok) {
+      // 💡 Novo caso: CPF existente porém fora do horário → mensagem amigável com contagem regressiva
+      if (json.errorCode === 'FORA_HORARIO_AGUARDE') {
+        const nome1 = primeiroNome(json.nome || '');
+        const hh = json.iniciaEm?.horas ?? '00';
+        const mm = json.iniciaEm?.minutos ?? '00';
+        const rotulo = json.labelDia || (json.proximoDia === 'Dia1' ? 'primeiro dia' : 'segundo dia');
+
+        return showModal(
+          'animacoes/confirm-wait.json',
+          `<h2>Quase lá, ${nome1}!</h2>
+           <p>${nome1}, faltam <strong>${hh}h${mm}</strong> para o início do <strong>${rotulo}</strong> do CONAPREV 2025.</p>
+           <p>Aguarde que já vamos liberar o sistema para a confirmação da sua presença no Evento! 🚀</p>`
+        );
+      }
+
       let msg;
       if (json.error && json.error.includes('não inscrito')) {
         msg = 'Lamentamos, mas você não fez sua inscrição para a 82ª Reunião do CONAPREV.';
       } else if (json.error) {
-        // neste caso json.error já contém algo como "Olá X, você não possui número..."
+        // pode vir “Olá X, você não possui número...” ou “Fora do horário permitido.” etc.
         msg = json.error;
+      } else if (json.message) {
+        msg = json.message;
       } else {
         msg = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
       }
@@ -125,9 +142,9 @@ confirmBtn.addEventListener('click', async () => {
     const ordinal = json.dia === 'Dia1' ? '1º dia' : '2º dia';
     const html    = `
       <h2>Confirmação realizada!</h2>
-      <p>Olá ${nome1}, que bom te ver por aqui! </p>
+      <p>Olá ${nome1}, que bom te ver por aqui!</p>
       <p>Sua participação no ${ordinal} da 82ª Reunião do CONAPREV</p>
-      <p>está confirmada confirmada!</p>
+      <p>está confirmada!</p>
       <hr>
       <div class="details">
         <p><strong>Inscrição:</strong> ${json.inscricao}</p>
