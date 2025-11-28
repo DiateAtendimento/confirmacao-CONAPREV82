@@ -26,7 +26,12 @@ html, body {
   padding: clamp(.5rem, 3vw, 1rem) 
           clamp(1rem, 5vw, 3rem) 
           clamp(.5rem, 3vw, 1rem);
-  background: linear-gradient(90deg, #082b5d 0%, #005ad1 100%);
+  background: linear-gradient(
+    135deg,
+    #052F2C 0%,
+    #094E49 55%,
+    #0B5F59 100%
+  );
 }
 
 /* 2. Imagens fluidas */
@@ -55,24 +60,26 @@ img {
 }
 
 /* 4. Card de confirmação */
+/* 4. Card de confirmação */
+/* ANCHOR: PALETA-REGIAO – CARD */
 .card {
-  background: #0c3a75;
+  background: #F9B200; /* azul da figura */
   border-radius: clamp(1rem, 4vw, 2rem);
   padding: clamp(1.5rem, 6vw, 2.5rem);
   margin: 0;             
   width: 100%;
   max-width: 600px;
   text-align: center;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
 }
+
 .card-logo {
   width: clamp(80px, 20vw, 12rem);
   margin: 0 auto clamp(1rem, 4vw, 1.5rem);
   display: block;
 }
 .card-text {
-  color: #fff;
+  color: #FFFFFF;
   font-size: clamp(1rem, 4vw, 1.2rem);
   line-height: 1.4;
   margin-bottom: clamp(1rem, 4vw, 1.5rem);
@@ -96,24 +103,25 @@ img {
 
 /* 6. Botão Confirmar */
 .btn-confirm {
-  background: #fdbf41;
-  color: #000;
+  background: #094E49;   /* amarelo da figura */
+  color: #ffffff;        /* verde-petróleo escuro para contraste */
   border: none;
   padding: clamp(.5rem, 2.5vw, .75rem) clamp(1.5rem, 6vw, 3rem);
   border-radius: 9999px;
   font-size: clamp(1rem, 4vw, 1.25rem);
-  font-weight: 500;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
   cursor: pointer;
-  transition: filter .2s;
+  transition: filter .2s, transform .15s ease-out;
 }
 .btn-confirm:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.08);
+  transform: translateY(-1px);
 }
 
 /* 7. Mensagens de feedback */
 .message {
-  color: #fff;
+  color: #F9F9F9;
   font-size: clamp(.8rem, 3vw, .95rem);
   min-height: 1.4em;
   white-space: pre-line;
@@ -140,14 +148,16 @@ img {
 }
 
 /* 9. Modal */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+.modal-container {
+  background: #094E49;  /* verde-petróleo */
+  color: #FFFFFF;
+  border-radius: clamp(1rem, 4vw, 1.5rem);
+  padding: clamp(1rem, 5vw, 2rem);
+  width: 90vw;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.7);
+  font-family: 'Segoe UI', sans-serif;
 }
 .modal-overlay.hidden {
   display: none !important;
@@ -196,22 +206,22 @@ img {
   font-size: clamp(.8rem, 3vw, .95rem);
 }
 .modal-close {
-  background: #fdbf41;
-  color: #000;
+  background: #00A8E2;
+  color: #094E49;
   border: none;
   padding: clamp(.5rem, 3vw, .75rem) clamp(1.5rem, 6vw, 2.5rem);
   border-radius: 9999px;
   font-size: clamp(.9rem, 3.5vw, 1rem);
-  font-weight: 500;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
   cursor: pointer;
-  transition: filter .2s;
+  transition: filter .2s, transform .15s ease-out;
   margin-top: clamp(.75rem, 4vw, 1rem);
 }
 .modal-close:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.08);
+  transform: translateY(-1px);
 }
-
 /* 10. Breakpoints extras para telas maiores */
 @media (min-width: 600px) {
   .card { max-width: 480px; }
