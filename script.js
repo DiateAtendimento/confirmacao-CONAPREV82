@@ -91,7 +91,7 @@ confirmBtn.addEventListener('click', async () => {
 
       const html = `
         <h2>Olá ${nome1}, você já confirmou!</h2>
-        <p>Presença registrada no ${ordinal} da 82ª Reunião do CONAPREV.</p>
+        <p>Presença registrada no ${ordinal} da 83ª Reunião do CONAPREV.</p>
         <hr>
         <div class="details">
           <p><strong>Inscrição:</strong> ${json.inscricao}</p>
@@ -124,7 +124,7 @@ confirmBtn.addEventListener('click', async () => {
 
       let msg;
       if (json.error && json.error.includes('não inscrito')) {
-        msg = 'Lamentamos, mas você não fez sua inscrição para a 82ª Reunião do CONAPREV.';
+        msg = 'Lamentamos, mas você não fez sua inscrição para a 83ª Reunião do CONAPREV.';
       } else if (json.error) {
         // pode vir “Olá X, você não possui número...” ou “Fora do horário permitido.” etc.
         msg = json.error;
@@ -145,7 +145,7 @@ confirmBtn.addEventListener('click', async () => {
     const html    = `
       <h2>Confirmação realizada!</h2>
       <p>Olá ${nome1}, que bom te ver por aqui!</p>
-      <p>Sua participação no ${ordinal} da 82ª Reunião do CONAPREV</p>
+      <p>Sua participação no ${ordinal} da 3ª Reunião do CONAPREV</p>
       <p>está confirmada!</p>
       <hr>
       <div class="details">
