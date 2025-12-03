@@ -145,7 +145,7 @@ confirmBtn.addEventListener('click', async () => {
     const html    = `
       <h2>Confirmação realizada!</h2>
       <p>Olá ${nome1}, que bom te ver por aqui!</p>
-      <p>Sua participação no ${ordinal} da 3ª Reunião do CONAPREV</p>
+      <p>Sua participação no ${ordinal} da 83ª Reunião do CONAPREV</p>
       <p>está confirmada!</p>
       <hr>
       <div class="details">
